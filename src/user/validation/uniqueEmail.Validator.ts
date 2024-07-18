@@ -13,7 +13,7 @@ export class UniqueEmailValidator implements ValidatorConstraintInterface {
   constructor(private userRepository: UserRepository) {}
 
   async validate(value: any): Promise<boolean> {
-    const userWithEmail = await this.userRepository.findByEmail(value)
+    const userWithEmail = await this.userRepository.findUserEmail(value)
     return !userWithEmail
   }
 }
