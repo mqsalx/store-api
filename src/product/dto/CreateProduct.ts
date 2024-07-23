@@ -12,7 +12,7 @@ import {
   ValidateNested
 } from "class-validator"
 
-export class ProductCharacteristicsDTO {
+export class ProductCharacteristicDTO {
   @IsString()
   @IsNotEmpty({ message: "Registration name cannot be empty!" })
   name: string
@@ -57,8 +57,8 @@ export class CreateProductDTO {
   @ValidateNested()
   @IsArray()
   @ArrayMinSize(3)
-  @Type(() => ProductCharacteristicsDTO)
-  characteristics: ProductCharacteristicsDTO[]
+  @Type(() => ProductCharacteristicDTO)
+  characteristics: ProductCharacteristicDTO[]
 
   @ValidateNested()
   @IsArray()

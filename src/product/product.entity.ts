@@ -1,21 +1,33 @@
-class ProductCharacteristics {
-  name: string;
-  description: string;
-}
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  PrimaryGeneratedColumn
+} from "typeorm"
 
-class ProductImage {
-  url: string;
-  description: string;
-}
-
+@Entity({ name: "products" })
 export class ProductEntity {
-  id: string;
-  userId: string;
-  name: string;
-  value: number;
-  amount: number;
-  description: string;
-  category: string;
-  characteristics: ProductCharacteristics[];
-  img: ProductImage[];
+  @PrimaryGeneratedColumn("uuid")
+  id: string
+  @Column({ name: "user_id", length: 100, nullable: false })
+  userId: string
+  @Column({ name: "name", length: 100, nullable: false })
+  name: string
+  @Column({ name: "value", nullable: false })
+  value: number
+  @Column({ name: "amount", nullable: false })
+  amount: number
+  @Column({ name: "description", length: 255, nullable: false })
+  description: string
+  @Column({ name: "category", length: 100, nullable: false })
+  category: string
+  @CreateDateColumn({ name: "created_at" })
+  created_at: Date
+  @CreateDateColumn({ name: "updated_at" })
+  updated_at: Date
+  @DeleteDateColumn({ name: "deleted_at" })
+  deleted_at: Date
+  // characteristics: ProductCharacteristic[]
+  // img: ProductImage[]
 }

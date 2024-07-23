@@ -21,8 +21,8 @@ export class ProductController {
     product.amount = data.amount
     product.description = data.description
     product.category = data.category
-    product.characteristics = data.characteristics
-    product.img = data.img
+    // product.characteristics = data.characteristics
+    // product.img = data.img
 
     const productCreated = this.productRepository.save(product)
     return productCreated
@@ -34,14 +34,8 @@ export class ProductController {
   }
 
   @Put("/:id")
-  async update(
-    @Param("id") id: string,
-    @Body() newData: UpdateProductDTO
-  ) {
-    const productUpdated = await this.productRepository.update(
-      id,
-      newData
-    )
+  async update(@Param("id") id: string, @Body() newData: UpdateProductDTO) {
+    const productUpdated = await this.productRepository.update(id, newData)
 
     return {
       product: productUpdated,

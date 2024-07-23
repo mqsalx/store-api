@@ -1,4 +1,4 @@
-class ListProductCharacteristicsDTO {
+class ListProductCharacteristicDTO {
   name: string;
   description: string;
 }
@@ -16,6 +16,6 @@ export class ListProductDTO {
   amount: number;
   description: string;
   category: string;
-  characteristics: ListProductCharacteristicsDTO[];
+  characteristics: ListProductCharacteristicDTO[];
   img: ListProductImageDTO[];
 }

@@ -10,7 +10,7 @@ import {
   Min,
   ValidateNested
 } from "class-validator"
-import { ProductCharacteristicsDTO, ProductImageDTO } from "./CreateProduct"
+import { ProductCharacteristicDTO, ProductImageDTO } from "./CreateProduct"
 
 export class UpdateProductDTO {
   @IsUUID(undefined, { message: "Invalid product ID!" })
@@ -42,9 +42,9 @@ export class UpdateProductDTO {
   @ValidateNested()
   @IsArray()
   @ArrayMinSize(3)
-  @Type(() => ProductCharacteristicsDTO)
+  @Type(() => ProductCharacteristicDTO)
   @IsOptional()
-  characteristics: ProductCharacteristicsDTO[]
+  characteristics: ProductCharacteristicDTO[]
 
   @ValidateNested()
   @IsArray()
