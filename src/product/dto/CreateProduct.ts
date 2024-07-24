@@ -11,8 +11,10 @@ import {
   Min,
   ValidateNested
 } from "class-validator"
+import { ProductEntity } from "../product.entity"
 
 export class ProductCharacteristicDTO {
+  id: string
   @IsString()
   @IsNotEmpty({ message: "Registration name cannot be empty!" })
   name: string
@@ -20,15 +22,18 @@ export class ProductCharacteristicDTO {
   @IsString()
   @IsNotEmpty({ message: "Feature description cannot be empty!" })
   description: string
+  product: ProductEntity
 }
 
 export class ProductImageDTO {
+  id: string
   @IsUrl({}, { message: "URL to invalid image!" })
   url: string
 
   @IsString()
   @IsNotEmpty({ message: "Image description cannot be empty!" })
   description: string
+  product: ProductEntity
 }
 
 export class CreateProductDTO {
@@ -64,7 +69,7 @@ export class CreateProductDTO {
   @IsArray()
   @ArrayMinSize(1)
   @Type(() => ProductImageDTO)
-  img: ProductImageDTO[]
+  image: ProductImageDTO[]
 
   @IsString()
   @IsNotEmpty({ message: "Product category cannot be empty!" })

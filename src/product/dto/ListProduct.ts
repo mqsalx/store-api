@@ -17,5 +17,5 @@ export class ListProductDTO {
   description: string;
   category: string;
   characteristics: ListProductCharacteristicDTO[];
-  img: ListProductImageDTO[];
+  image: ListProductImageDTO[];
 }

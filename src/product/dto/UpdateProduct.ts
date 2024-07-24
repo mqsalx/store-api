@@ -51,7 +51,7 @@ export class UpdateProductDTO {
   @ArrayMinSize(1)
   @Type(() => ProductImageDTO)
   @IsOptional()
-  img: ProductImageDTO[]
+  image: ProductImageDTO[]
 
   @IsString()
   @IsNotEmpty({ message: "Product category cannot be empty!" })

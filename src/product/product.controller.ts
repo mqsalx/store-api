@@ -24,8 +24,8 @@ export class ProductController {
     product.amount = data.amount
     product.description = data.description
     product.category = data.category
-    // product.characteristics = data.characteristics
-    // product.img = data.img
+    product.characteristics = data.characteristics
+    product.image = data.image
 
     const productCreated = this.productService.create(product)
     return productCreated
