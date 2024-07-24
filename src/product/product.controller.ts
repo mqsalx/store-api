@@ -1,14 +1,17 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common"
 import { randomUUID } from "crypto"
-
 import { CreateProductDTO } from "./dto/CreateProduct"
 import { UpdateProductDTO } from "./dto/UpdateProduct"
 import { ProductEntity } from "./product.entity"
 import { ProductRepository } from "./product.repository"
+import { ProductService } from "./product.service"
 
 @Controller("/products")
 export class ProductController {
-  constructor(private readonly productRepository: ProductRepository) {}
+  constructor(
+    private readonly productRepository: ProductRepository,
+    private readonly productService: ProductService
+  ) {}
 
   @Post()
   async create(@Body() data: CreateProductDTO) {
@@ -24,7 +27,7 @@ export class ProductController {
     // product.characteristics = data.characteristics
     // product.img = data.img
 
-    const productCreated = this.productRepository.save(product)
+    const productCreated = this.productService.create(product)
     return productCreated
   }
 
