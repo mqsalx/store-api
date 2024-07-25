@@ -1,3 +1,4 @@
+import { ItemOrderEntity } from "src/order/itemorder.entity"
 import {
   Column,
   CreateDateColumn,
@@ -23,14 +24,24 @@ export class ProductEntity {
   description: string
   @Column({ name: "category", length: 100, nullable: false })
   category: string
-  @OneToMany(() => ProductCharacteristicEntity, (productCharacteristicEntity) => productCharacteristicEntity.product, { cascade: true, eager: true })
-  characteristics: ProductCharacteristicEntity[]
-  @OneToMany(() => ProductImageEntity, (productImageEntity) => productImageEntity.product, { cascade: true, eager: true })
-  image: ProductImageEntity[]
   @CreateDateColumn({ name: "created_at" })
   created_at: Date
   @CreateDateColumn({ name: "updated_at" })
   updated_at: Date
   @DeleteDateColumn({ name: "deleted_at" })
   deleted_at: Date
+  @OneToMany(
+    () => ProductCharacteristicEntity,
+    (productCharacteristicEntity) => productCharacteristicEntity.product,
+    { cascade: true, eager: true }
+  )
+  characteristics: ProductCharacteristicEntity[]
+  @OneToMany(
+    () => ProductImageEntity,
+    (productImageEntity) => productImageEntity.product,
+    { cascade: true, eager: true }
+  )
+  image: ProductImageEntity[]
+  @OneToMany(() => ItemOrderEntity, (itemOrder) => itemOrder.product)
+  itemsOrder: ItemOrderEntity[]
 }

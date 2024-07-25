@@ -4,10 +4,12 @@ import {
   DeleteDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn
 } from "typeorm"
 import { OrderStatus } from "./enum/statupedido.enum"
 import { UserEntity } from "../user/user.entity"
+import { ItemOrderEntity } from "./itemorder.entity"
 
 @Entity({ name: "orders" })
 export class OrderEntity {
@@ -27,4 +29,6 @@ export class OrderEntity {
   deleted_at: Date
   @ManyToOne(() => UserEntity, (user) => user.orders)
   user: UserEntity
+  @OneToMany(() => ItemOrderEntity, (itemOrder) => itemOrder.order, { cascade: true })
+  itemsOrder: ItemOrderEntity[]
 }

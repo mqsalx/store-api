@@ -1,26 +1,52 @@
-import { Injectable } from '@nestjs/common';
-import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
+import { Injectable } from "@nestjs/common"
+import { InjectRepository } from "@nestjs/typeorm"
+import { UserEntity } from "src/user/user.entity"
+import { Repository } from "typeorm"
+import { CreateOrderDTO } from "./dto/create-order.dto"
+import { OrderStatus } from "./enum/statupedido.enum"
+import { ItemOrderEntity } from "./itemorder.entity"
+import { OrderEntity } from "./order.entity"
 
 @Injectable()
 export class OrderService {
-  create(createOrderDto: CreateOrderDto) {
-    return 'This action adds a new order';
-  }
+  constructor(
+    @InjectRepository(OrderEntity)
+    private readonly orderRepository: Repository<OrderEntity>,
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>
+  ) {}
+  async create(userId: string, orderData: CreateOrderDTO) {
+    const user = await this.userRepository.findOneBy({ id: userId })
+    const orderEntity = new OrderEntity()
 
-  findAll() {
-    return `This action returns all order`;
-  }
+    orderEntity.status = OrderStatus.IN_PROGRESS
+    orderEntity.user = user
 
-  findOne(id: number) {
-    return `This action returns a #${id} order`;
-  }
+    const itemsOrderEntity = orderData.itemsOrder.map((itemOrder) => {
+      const itemOrderEntity = new ItemOrderEntity()
+      itemOrderEntity.salePrice = 10
+      itemOrderEntity.amount = itemOrder.amount
+      return itemOrderEntity
+    })
 
-  update(id: number, updateOrderDto: UpdateOrderDto) {
-    return `This action updates a #${id} order`;
-  }
+    const totalValue = itemsOrderEntity.reduce((total, item) => {
+      return total + item.salePrice * item.amount
+    }, 0)
 
-  remove(id: number) {
-    return `This action removes a #${id} order`;
+    orderEntity.itemsOrder = itemsOrderEntity
+    orderEntity.totalValue = totalValue
+
+    const createdOrder = await this.orderRepository.save(orderEntity)
+    return createdOrder
+  }
+  async list(userId: string) {
+    return this.orderRepository.find({
+      where: {
+        user: { id: userId }
+      },
+      relations: {
+        user: true
+      }
+    })
   }
 }
