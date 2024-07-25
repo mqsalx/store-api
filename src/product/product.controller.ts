@@ -21,7 +21,7 @@ export class ProductController {
     product.name = data.name
     product.userId = data.userId
     product.value = data.value
-    product.amount = data.amount
+    product.availableQuantity = data.availableQuantity
     product.description = data.description
     product.category = data.category
     product.characteristics = data.characteristics

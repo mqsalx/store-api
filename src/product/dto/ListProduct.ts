@@ -13,7 +13,7 @@ export class ListProductDTO {
   userId: string;
   name: string;
   value: number;
-  amount: number;
+  availableQuantity: number;
   description: string;
   category: string;
   characteristics: ListProductCharacteristicDTO[];
