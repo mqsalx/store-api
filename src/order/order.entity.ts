@@ -3,9 +3,11 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn
 } from "typeorm"
 import { OrderStatus } from "./enum/statupedido.enum"
+import { UserEntity } from "../user/user.entity"
 
 @Entity({ name: "orders" })
 export class OrderEntity {
@@ -23,4 +25,6 @@ export class OrderEntity {
   updated_at: Date
   @DeleteDateColumn({ name: "deleted_at" })
   deleted_at: Date
+  @ManyToOne(() => UserEntity, (user) => user.orders)
+  user: UserEntity
 }
