@@ -13,8 +13,6 @@ import { ProductImageEntity } from "./product-Image.entity"
 export class ProductEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string
-  @Column({ name: "user_id", length: 100, nullable: false })
-  userId: string
   @Column({ name: "name", length: 100, nullable: false })
   name: string
   @Column({ name: "value", nullable: false })
