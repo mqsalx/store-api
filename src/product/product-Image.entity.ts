@@ -9,6 +9,6 @@ export class ProductImageEntity {
   url: string
   @Column({ name: "description", length: 255, nullable: false })
   description: string
-  @ManyToOne(()=> ProductEntity, product => product.characteristics)
+  @ManyToOne(()=> ProductEntity, product => product.characteristics, { orphanedRowAction: "delete", onDelete: "CASCADE", onUpdate: "CASCADE" })
   product: ProductEntity
 }
