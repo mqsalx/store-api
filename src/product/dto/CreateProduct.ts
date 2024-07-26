@@ -69,7 +69,7 @@ export class CreateProductDTO {
   @IsArray()
   @ArrayMinSize(1)
   @Type(() => ProductImageDTO)
-  image: ProductImageDTO[]
+  images: ProductImageDTO[]
 
   @IsString()
   @IsNotEmpty({ message: "Product category cannot be empty!" })

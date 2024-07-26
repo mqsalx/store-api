@@ -4,4 +4,6 @@ npm run typeorm migration:generate src/db/migrations/create-tables
 npm run typeorm migration:generate src/db/migrations/map-user-order
 npm run typeorm migration:generate src/db/migrations/rel-order-itemOrder
 npm run typeorm migration:generate src/db/migrations/rel-order-itemOrder-product
+npm run typeorm migration:generate src/db/migrations/mod-order-field
+npm run typeorm migration:generate src/db/migrations/mod-order-fieldAndProduct
 npm run typeorm migration:run

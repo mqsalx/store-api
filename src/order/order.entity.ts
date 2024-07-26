@@ -19,8 +19,6 @@ export class OrderEntity {
   totalValue: number
   @Column({ name: "status", enum: OrderStatus, nullable: false })
   status: OrderStatus
-  @Column({ name: "password", length: 255, nullable: false })
-  password: string
   @CreateDateColumn({ name: "created_at" })
   created_at: Date
   @CreateDateColumn({ name: "updated_at" })
