@@ -39,6 +39,29 @@ export class ProductService {
     return listProducts
   }
 
+  async retrieve(id: string) {
+    const savedProduct = await this.productRepository.findOne({
+      where: { id },
+      relations: {
+        images: true,
+        characteristics: true
+      }
+    })
+
+    if (savedProduct === null) {
+      throw new NotFoundException("product not found")
+    }
+
+    const listProduct = new ListProductDTO(
+      savedProduct.id,
+      savedProduct.name,
+      savedProduct.characteristics,
+      savedProduct.images
+    )
+
+    return listProduct
+  }
+
   async update(id: string, userEntity: UpdateProductDTO) {
     const entityName = await this.productRepository.findOneBy({ id })
 

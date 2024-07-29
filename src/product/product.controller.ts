@@ -1,9 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common"
+import { Body, Controller, Delete, Get, Param, Post, Put, UseInterceptors } from "@nestjs/common"
 import { randomUUID } from "crypto"
 import { CreateProductDTO } from "./dto/CreateProduct"
 import { UpdateProductDTO } from "./dto/UpdateProduct"
 import { ProductEntity } from "./product.entity"
 import { ProductService } from "./product.service"
+import { CacheInterceptor } from "@nestjs/cache-manager"
 
 @Controller("/products")
 export class ProductController {
@@ -29,6 +30,13 @@ export class ProductController {
   @Get()
   async list() {
     return this.productService.list()
+  }
+
+  @Get("/:id")
+  @UseInterceptors(CacheInterceptor)
+  async retrieve(@Param("id") id: string){
+    const savedProduct = await this.productService.retrieve(id)
+    return savedProduct
   }
 
   @Put("/:id")
