@@ -1,10 +1,10 @@
 import { Module } from "@nestjs/common"
 import { TypeOrmModule } from "@nestjs/typeorm"
-import { UserEntity } from "src/user/user.entity"
+import { UserEntity } from "src/modules/user/user.entity"
 import { OrderController } from "./order.controller"
 import { OrderEntity } from "../order/order.entity"
 import { OrderService } from "../order/order.service"
-import { ProductModule } from "src/product/product.module"
+import { ProductModule } from "src/modules/product/product.module"
 
 
 @Module({

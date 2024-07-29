@@ -62,7 +62,7 @@ export class ProductService {
     return listProduct
   }
 
-  async update(id: string, userEntity: UpdateProductDTO) {
+  async update(id: string, dto: UpdateProductDTO) {
     const entityName = await this.productRepository.findOneBy({ id })
 
     // if (entityName === null) {
@@ -70,7 +70,7 @@ export class ProductService {
       throw new NotFoundException("Product not found!")
     }
 
-    Object.assign(entityName, userEntity as ProductEntity)
+    Object.assign(entityName, dto as ProductEntity)
 
     await this.productRepository.save(entityName)
   }

@@ -5,10 +5,11 @@ import { APP_FILTER } from "@nestjs/core"
 import { TypeOrmModule } from "@nestjs/typeorm"
 import { redisStore } from "cache-manager-redis-yet"
 import { PostgresConfigService } from "src/config/db.config"
-import { GlobalExceptionFilter } from "./filters/global-exception-filter"
-import { OrderModule } from "./order/order.module"
-import { ProductModule } from "./product/product.module"
-import { UserModule } from "./user/user.module"
+import { GlobalExceptionFilter } from "./resources/filters/global-exception-filter"
+import { OrderModule } from "./modules/order/order.module"
+import { ProductModule } from "./modules/product/product.module"
+import { UserModule } from "./modules/user/user.module"
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -27,7 +28,8 @@ import { UserModule } from "./user/user.module"
         store: await redisStore({ ttl: 3600 * 1000 })
       }),
       isGlobal: true
-    })
+    }),
+    AuthModule
   ],
   providers: [
     {

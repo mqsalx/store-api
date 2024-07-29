@@ -1,29 +1,27 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common"
-import { v4 as uuid } from "uuid"
+import { PasswordHashPipe } from "../../resources/pipes/password-hash.pipe"
 import { CreateUserDTO } from "./dto/CreateUser.dto"
 import { ListUserDTO } from "./dto/ListUser.dto"
 import { UpdateUserDTO } from "./dto/UpdateUser.dto"
-import { UserEntity } from "./user.entity"
-import { UserRepository } from "./user.repository"
 import { UserService } from "./user.service"
 
 @Controller("/users")
 export class UserController {
-  constructor(
-    private userRepository: UserRepository,
-    private userService: UserService
-  ) {}
+  constructor(private userService: UserService) {}
 
   @Post()
-  async create(@Body() data: CreateUserDTO) {
-    const userEntity = new UserEntity()
-    userEntity.id = uuid()
-    userEntity.name = data.name
-    userEntity.email = data.email
-    userEntity.password = data.password
-    this.userService.create(userEntity)
+  async create(
+    @Body() { password, ...data }: CreateUserDTO,
+    @Body("password", PasswordHashPipe) hashedPassword: string
+  ) {
+    const createdUser = await this.userService.create({
+      ...data,
+      password: hashedPassword
+    })
+
     return {
-      user: new ListUserDTO(userEntity.id, userEntity.name),
+      user: new ListUserDTO(createdUser.id, createdUser.name),
       message: "User created successfully!"
     }
   }

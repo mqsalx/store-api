@@ -7,8 +7,8 @@ import {
   OneToMany,
   PrimaryGeneratedColumn
 } from "typeorm"
-import { OrderStatus } from "./enum/statupedido.enum"
 import { UserEntity } from "../user/user.entity"
+import { OrderStatus } from "./enum/orderstatus.enum"
 import { ItemOrderEntity } from "./itemorder.entity"
 
 @Entity({ name: "orders" })
@@ -27,6 +27,8 @@ export class OrderEntity {
   deleted_at: Date
   @ManyToOne(() => UserEntity, (user) => user.orders)
   user: UserEntity
-  @OneToMany(() => ItemOrderEntity, (itemOrder) => itemOrder.order, { cascade: true })
+  @OneToMany(() => ItemOrderEntity, (itemOrder) => itemOrder.order, {
+    cascade: true
+  })
   itemsOrder: ItemOrderEntity[]
 }

@@ -1,4 +1,4 @@
-import { ItemOrderEntity } from "src/order/itemorder.entity"
+import { ItemOrderEntity } from "src/modules/order/itemorder.entity"
 import {
   Column,
   CreateDateColumn,

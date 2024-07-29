@@ -9,7 +9,7 @@ import { ProductEntity } from "../product/product.entity"
 import { UserEntity } from "../user/user.entity"
 import { CreateOrderDTO } from "./dto/create-order.dto"
 import { UpdateOrderDTO } from "./dto/update-order.dto"
-import { OrderStatus } from "./enum/statupedido.enum"
+import { OrderStatus } from "./enum/orderstatus.enum"
 import { ItemOrderEntity } from "./itemorder.entity"
 import { OrderEntity } from "./order.entity"
 
@@ -107,7 +107,7 @@ export class OrderService {
     })
   }
 
-  async UpdateDateColumn(id: string, dto: UpdateOrderDTO) {
+  async update(id: string, dto: UpdateOrderDTO) {
     const order = await this.orderRepository.findOneBy({ id })
     if (order === null) {
       throw new NotFoundException("Order not found!")
