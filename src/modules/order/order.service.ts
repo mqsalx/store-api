@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   BadRequestException,
   Injectable,
@@ -107,8 +108,11 @@ export class OrderService {
     })
   }
 
-  async update(id: string, dto: UpdateOrderDTO) {
-    const order = await this.orderRepository.findOneBy({ id })
+  async update(id: string, dto: UpdateOrderDTO, userId: string) {
+    const order = await this.orderRepository.findOne({
+      where: { id },
+      relations: { user: true }
+    })
     if (order === null) {
       throw new NotFoundException("Order not found!")
     }
