@@ -4,7 +4,7 @@ import * as bcrypt from "bcrypt"
 import { UserService } from "../user/user.service"
 import { JwtService } from "@nestjs/jwt"
 
-interface UserPayload {
+export interface UserPayload {
   sub: string
   userName: string
 }
