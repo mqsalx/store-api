@@ -24,7 +24,7 @@ export class OrderService {
     private readonly productRepository: Repository<ProductEntity>
   ) {}
 
-  private async findUser(id) {
+  private async findUser(id: string) {
     const user = await this.userRepository.findOneBy({ id })
     if (user === null) {
       throw new NotFoundException("User not found!")
@@ -40,8 +40,7 @@ export class OrderService {
       const relatedProduct = relatedProducts.find(
         (product) => product.id === itemOrder.productId
       )
-      // if (relatedProduct === undefined) {
-      if (!relatedProduct) {
+      if (relatedProduct === undefined) {
         throw new NotFoundException("Product not found!")
       }
       if (itemOrder.amount > relatedProduct.availableQuantity) {
@@ -60,6 +59,14 @@ export class OrderService {
     const relatedProducts = await this.productRepository.findBy({
       id: In(productsIds)
     })
+
+    // const missingProducts = productsIds.filter(
+    //   (productId) =>
+    //     !relatedProducts.some((product) => product.id === productId)
+    // )
+    // if (missingProducts.length > 0) {
+    //   throw new NotFoundException("One or more products not found!")
+    // }
 
     orderEntity.status = OrderStatus.IN_PROGRESS
     orderEntity.user = user
@@ -105,7 +112,7 @@ export class OrderService {
     if (order === null) {
       throw new NotFoundException("Order not found!")
     }
-    Object.assign(order, dto)
+    Object.assign(order, dto as OrderEntity)
     await this.orderRepository.save(order)
   }
 }

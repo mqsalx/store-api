@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common"
+import { Injectable, NotFoundException } from "@nestjs/common"
 import { InjectRepository } from "@nestjs/typeorm"
 import { Repository } from "typeorm"
 import { ListUserDTO } from "./dto/ListUser.dto"
@@ -12,12 +12,10 @@ export class UserService {
     private readonly userRepository: Repository<UserEntity>
   ) {}
 
-  async create(userEntity: UserEntity) {
-    await this.userRepository.save(userEntity)
-    return {
-      user: new ListUserDTO(userEntity.id, userEntity.name),
-      message: "User created successfully!"
-    }
+  async create(userData: UserEntity) {
+    const userEntity = new UserEntity()
+    Object.assign(userEntity, userData as UserEntity)
+    return this.userRepository.save(userEntity)
   }
 
   async list() {
@@ -28,8 +26,15 @@ export class UserService {
     return listUsers
   }
 
-  async update(id: string, userEntity: UpdateUserDTO) {
-    await this.userRepository.update(id, userEntity)
+  async update(id: string, userData: UpdateUserDTO) {
+    const user = await this.userRepository.findOneBy({ id })
+
+    if (user === null)
+      throw new NotFoundException("User not found!")
+
+    Object.assign(user, userData as UserEntity)
+
+    return this.userRepository.save(user)
   }
 
   async delete(id: string) {

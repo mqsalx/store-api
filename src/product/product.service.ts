@@ -12,8 +12,12 @@ export class ProductService {
     private productRepository: Repository<ProductEntity>
   ) {}
 
-  async create(productEntity: ProductEntity) {
-    await this.productRepository.save(productEntity)
+  async create(productData: ProductEntity) {
+    const productEntity = new ProductEntity()
+
+    Object.assign(productEntity, productData as ProductEntity)
+
+    return this.productRepository.save(productEntity)
   }
 
   async list() {
@@ -43,7 +47,7 @@ export class ProductService {
       throw new NotFoundException("Product not found!")
     }
 
-    Object.assign(entityName, userEntity)
+    Object.assign(entityName, userEntity as ProductEntity)
 
     await this.productRepository.save(entityName)
   }
