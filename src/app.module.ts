@@ -1,7 +1,7 @@
 import { CacheModule } from "@nestjs/cache-manager"
-import { Module } from "@nestjs/common"
+import { ClassSerializerInterceptor, Module } from "@nestjs/common"
 import { ConfigModule } from "@nestjs/config"
-import { APP_FILTER } from "@nestjs/core"
+import { APP_FILTER, APP_INTERCEPTOR } from "@nestjs/core"
 import { TypeOrmModule } from "@nestjs/typeorm"
 import { redisStore } from "cache-manager-redis-yet"
 import { PostgresConfigService } from "src/config/db.config"
@@ -35,6 +35,10 @@ import { AuthModule } from './modules/auth/auth.module';
     {
       provide: APP_FILTER,
       useClass: GlobalExceptionFilter
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ClassSerializerInterceptor
     }
   ]
 })
