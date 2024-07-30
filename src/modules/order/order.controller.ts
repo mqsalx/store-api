@@ -38,12 +38,8 @@ export class OrderController {
     @Param("id") id: string,
     @Body() data: UpdateOrderDTO
   ) {
-    const userId = req.user.sub;
-    const updatedOrder = await this.orderService.update(
-      id,
-      data,
-      userId,
-    );
-    return updatedOrder;
+    const userId = req.user.sub
+    const updatedOrder = await this.orderService.update(id, data, userId)
+    return updatedOrder
   }
 }

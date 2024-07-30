@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate {
     } catch {
       throw new UnauthorizedException("Invalid token!")
     }
-    return false
+    return true
   }
   private extractToken(request: Request): string | undefined {
     const [type, token] = request.headers.authorization?.split(" ") ?? []
